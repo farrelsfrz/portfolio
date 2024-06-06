@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Produk</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <nav>
+          <div class="container">
+            <div class="logo">
+              <a href="index.html">
+                <img
+                  src="assets/logo.png"
+                  alt="Kembali"
+                  width="60px"
+                  height="60px"
+              /></a>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <h1 class="Nama text-3xl mt-4 font-bold">Detail Produk</h1>
+      <div
+        v-if="productId == 1"
+        class="flex justify-center my-4 space-x-8 bg-[#fff] shadow-lg rounded-md border-[1px] border-black w-[70%] py-20 mx-auto px-4"
+      >
+        <img src="assets/Hoodie.png" alt="Produk 1" width="200px" />
+        <div>
+          <h2 class="font-bold text-2xl">Hoodie CAD</h2>
+          <p>Harga: Rp396.000</p>
+          <p>CAD - Patch - Hoodie</p>
+          <p>Details :</p>
+          <p>350 gsm fleece material</p>
+          <p>Regular fit</p>
+          <p>CAD graphic on raw patch</p>
+          <p>Ribbed at cuffs and buttom edge</p>
+          <p>Drawstring adjustable hoodie</p>
+        </div>
+      </div>
+
+      <div
+        v-else-if="productId == 2"
+        class="flex justify-center my-4 space-x-8 bg-[#fff] shadow-lg rounded-md border-[1px] border-black w-[70%] py-20 mx-auto px-4"
+      >
+        <img src="assets/JacketHarrington.png" alt="Produk 2" width="300px" />
+        <div>
+          <h2 class="font-bold text-2xl">Jacket Harrington</h2>
+          <p>Harga: Rp600.000</p>
+          <p>Jacket Harrington James Dean Black</p>
+          <p>This Harrington Jacket Features :</p>
+          <p>100% Unionwell Original Guaranted</p>
+          <p>100% Finest Canvas Sweding</p>
+          <p>Embroidery Patch</p>
+          <p>Laken Embroidery</p>
+          <p>Snap Logo Button</p>
+          <p>Tag & Label Sizw</p>
+          <p>Woven Label</p>
+          <p>Zipper Antikbrush</p>
+          <p>Available 3 pocket (One Inside)</p>
+        </div>
+      </div>
+
+      <div
+        v-else-if="productId == 3"
+        class="flex justify-center my-4 space-x-8 bg-[#fff] shadow-lg rounded-md border-[1px] border-black w-[70%] py-20 mx-auto px-4"
+      >
+        <img src="assets/DenimJacket.png" alt="Produk 3" width="200px" />
+        <div>
+          <h2 class="font-bold text-2xl">Denim Jacket</h2>
+          <p>Harga: Rp900.000</p>
+          <p>Haranet Type 1 Jacket Black Indigo</p>
+          <p>Artikel: NURF DENIM Haranet Type 1</p>
+          <p>14 oz</p>
+          <p>Black Indigo</p>
+          <p>Laurel Leaf Button</p>
+          <p>Non - Stretch</p>
+          <p>Full Chainstich Construction</p>
+        </div>
+      </div>
+
+      <div
+        v-else-if="productId == 4"
+        class="flex justify-center my-4 space-x-8 bg-[#fff] shadow-lg rounded-md border-[1px] border-black w-[70%] py-20 mx-auto px-4"
+      >
+        <img src="assets/DenimSelvedge.png" alt="Produk 4" width="200px" />
+        <div>
+          <h2 class="font-bold text-2xl">Denim Selvedge</h2>
+          <p>Harga: Rp599.000</p>
+          <p>TANAMI - 17oz - Deep Indigo - Denim Selvedge - Slim Straight</p>
+          <p>Details:</p>
+          <p>Slim StraigRaw Denim 17 oz Broken Twill Usanforized</p>
+          <p>Deep Indigo</p>
+          <p>Gold & Old Green</p>
+          <p>
+            Rivet by YKK snap fastener Japan, Gold Laurel Leaf Japan for Top
+            Button, Black Laurel Leaf Japan for Button Fly
+          </p>
+          <p>Yellow & Gree Selvedge</p>
+          <p>Nurf denim Embossed Vegetan Leather Patch with Eco Print</p>
+          <p>Chainstitch Hem – Union Special</p>
+        </div>
+      </div>
+
+      <div
+        v-else-if="productId == 5"
+        class="flex justify-center my-4 space-x-8 bg-[#fff] shadow-lg rounded-md border-[1px] border-black w-[70%] py-20 mx-auto px-4"
+      >
+        <img src="assets/RetrogradeHi.png" alt="Produk 5" width="200px" />
+        <div>
+          <h2 class="font-bold text-2xl">Retrograde High</h2>
+          <p>Harga: Rp 538.000</p>
+          <p>Compass®️ Retrograde</p>
+          <p>• US 4 / UK 3 / EUR 34 / CM 22.5</p>
+          <p>• US 4.5 / UK 3.5 / EUR 35 / CM 23.5</p>
+          <p>• US 5 / UK 4 / EUR 36 / CM 24</p>
+          <p>• US 5.5 / UK 4.5 / EUR 37 / CM 24.5</p>
+          <p>• US 6.5 / UK 5.5 / EUR 38 / CM 25</p>
+          <p>• US 7 / UK 6 / EUR 39 / CM 26</p>
+          <p>• US 8 / UK 7 / EUR 40 / CM 26.5</p>
+          <p>• US 8.5 / UK 7.5 / EUR 41 / CM 27</p>
+          <p>• US 9.5 / UK 8.5 / EUR 42 / CM 27.5</p>
+          <p>• US 10 / UK 9 / EUR 43 / CM 28.5</p>
+          <p>• US 10.5 / UK 9.5 / EUR 44 / CM 29</p>
+          <p>• US 11 / UK 10.5 / EUR 45 / CM 29.5</p>
+        </div>
+      </div>
+
+      <div
+        v-else-if="productId == 6"
+        class="flex justify-center my-4 space-x-8 bg-[#fff] shadow-lg rounded-md border-[1px] border-black w-[70%] py-20 mx-auto px-4"
+      >
+        <img src="assets/RetrogradeLow.png" alt="Produk 6" width="200px" />
+        <div>
+          <h2 class="font-bold text-2xl">Retrograde Low</h2>
+          <p>Harga: Rp 538.000</p>
+          <p>Compass®️ Retrograde</p>
+          <p>• US 4 / UK 3 / EUR 34 / CM 22.5</p>
+          <p>• US 4.5 / UK 3.5 / EUR 35 / CM 23.5</p>
+          <p>• US 5 / UK 4 / EUR 36 / CM 24</p>
+          <p>• US 5.5 / UK 4.5 / EUR 37 / CM 24.5</p>
+          <p>• US 6.5 / UK 5.5 / EUR 38 / CM 25</p>
+          <p>• US 7 / UK 6 / EUR 39 / CM 26</p>
+          <p>• US 8 / UK 7 / EUR 40 / CM 26.5</p>
+          <p>• US 8.5 / UK 7.5 / EUR 41 / CM 27</p>
+          <p>• US 9.5 / UK 8.5 / EUR 42 / CM 27.5</p>
+          <p>• US 10 / UK 9 / EUR 43 / CM 28.5</p>
+          <p>• US 10.5 / UK 9.5 / EUR 44 / CM 29</p>
+          <p>• US 11 / UK 10.5 / EUR 45 / CM 29.5</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <p>&copy; MuyEstiloso™</p>
+      </div>
+    </footer>
+
+    <script>
+      const app = new Vue({
+        el: ".container",
+        data: {
+          productId: 0,
+        },
+        mounted() {
+          // Ambil parameter URL untuk mendapatkan ID produk
+          const urlParams = new URLSearchParams(window.location.search);
+          this.productId = parseInt(urlParams.get("id")) || 0;
+        },
+      });
+    </script>
+  </body>
+</html>

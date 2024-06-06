@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keranjang Belanja</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+  <header>
+    <nav>
+      <div class="nav-atas">
+        <a href="index.html">
+          <img src="assets/logo.png" alt="Kembali" width="70px" height="70px" />
+        </a>
+        <div class="cart">
+          <a href="keranjang.html">
+            <img
+              src="assets/keranjang.png"
+              alt="Keranjang"
+              width="40px"
+              height="40px"
+            />
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <ul>
+        <li v-for="(item, index) in cartItems" :key="index">
+          <input type="checkbox" v-model="item.checked" @change="updateTotalPrice" />
+          <img :src="'assets/' + item.image" :alt="item.name" width="50" />
+          <span>{{ item.name }}</span>
+          <span>Harga: Rp{{ item.price }}</span>
+          <div class="quantity-control">
+            <button @click="decreaseQuantity(index)">-</button>
+            <span>{{ item.quantity }}</span>
+            <button @click="increaseQuantity(index)">+</button>
+          </div>
+          <button @click="removeFromCart(index)" class="keranjangButton">Hapus</button>
+        </li>
+      </ul>
+      <p v-if="cartItems.length === 0">Keranjang belanja Anda kosong.</p>
+      <div class="checkout-container">
+        <span>Total: Rp{{ totalPrice }}</span>
+        <button @click="openModal" class="checkoutButton">Checkout ({{ checkedItemsCount }})</button>
+      </div>
+      <p v-if="checkoutMessage">{{ checkoutMessage }}</p>
+    </div>
+  </main>
+
+  <div id="checkoutModal" class="modal" v-show="showModal">
+    <div class="modal-content">
+      <span class="close" @click="closeModal">&times;</span>
+      <h2>Isi Data Diri</h2>
+      <form @submit.prevent="processCheckout">
+        <label for="name">Nama:</label>
+        <input type="text" id="name" v-model="userData.name" required><br><br>
+        <label for="address">Alamat:</label>
+        <input type="text" id="address" v-model="userData.address" required><br><br>
+        <label for="payment">Metode Pembayaran:</label>
+        <select id="payment" v-model="userData.payment" required>
+          <option value="transfer">Transfer Bank</option>
+          <option value="cod">Cash on Delivery (COD)</option>
+        </select><br><br>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer-keranjang">
+    <div class="container">
+      <p>&copy; MuyEstiloso™</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      cartItems: [],
+      checkoutMessage: "",
+      showModal: false,
+      userData: {
+        name: "",
+        address: "",
+        payment: "transfer"
+      }
+    },
+    mounted() {
+      this.fetchCartItems();
+    },
+    computed: {
+      checkedItemsCount() {
+        return this.cartItems.filter(item => item.checked).length;
+      },
+      totalPrice() {
+        return this.cartItems.reduce((sum, item) => {
+          if (item.checked) {
+            return sum + item.price * item.quantity;
+          } else {
+            return sum;
+          }
+        }, 0);
+      }
+    },
+    methods: {
+      fetchCartItems() {
+        this.cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+        this.cartItems.forEach(item => {
+          Vue.set(item, 'checked', false);
+          Vue.set(item, 'quantity', item.quantity || 1);
+        });
+      },
+      removeFromCart(index) {
+        this.cartItems.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(this.cartItems));
+      },
+      updateTotalPrice() {
+      },
+      openModal() {
+        this.showModal = true;
+      },
+      closeModal() {
+        this.showModal = false;
+      },
+      processCheckout() {
+        const checkedItems = this.cartItems.filter(item => item.checked);
+        if (checkedItems.length > 0) {
+          this.cartItems = this.cartItems.filter(item => !item.checked);
+          localStorage.setItem("cart", JSON.stringify(this.cartItems));
+          this.checkoutMessage = "Barang berhasil di checkout.";
+        } else {
+          this.checkoutMessage = "Tidak ada barang yang dipilih.";
+        }
+        this.showModal = false;
+        this.userData = { name: "", address: "", payment: "transfer" };
+        setTimeout(() => {
+          this.checkoutMessage = "";
+        }, 1000);
+      },
+      increaseQuantity(index) {
+        this.cartItems[index].quantity++;
+        localStorage.setItem("cart", JSON.stringify(this.cartItems));
+      },
+      decreaseQuantity(index) {
+        if (this.cartItems[index].quantity > 1) {
+          this.cartItems[index].quantity--;
+          localStorage.setItem("cart", JSON.stringify(this.cartItems));
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>

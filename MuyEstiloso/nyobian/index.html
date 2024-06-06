@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page Belanja Online dengan Vue.js</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      .star-rating {
+        color: #ffd700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <header>
+        <nav>
+          <div class="nav-atas">
+            <img
+              src="assets/logo.png"
+              alt="Logo Perusahaan"
+              width="70px"
+              height="70px"
+            />
+            <div class="search-bar">
+              <input
+                v-model="searchQuery"
+                @input="searchProducts"
+                type="text"
+                placeholder="Search"
+              />
+              <button @click="searchProducts">
+                <img
+                  src="assets/nyari.png"
+                  alt="Search"
+                  width="20px"
+                  height="20px"
+                />
+              </button>
+            </div>
+            <div class="cart">
+              <a href="keranjang.html">
+                <img
+                  src="assets/keranjang.png"
+                  alt="Keranjang"
+                  width="40px"
+                  height="42px"
+                />
+              </a>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <main>
+        <div class="container">
+          <h1 class="Nama">WELCOME TO MUY ESTILOSO</h1>
+          <div class="products">
+            <div
+              v-for="product in filteredProducts"
+              :key="product.id"
+              class="product"
+            >
+              <img
+                :src="'assets/' + product.image"
+                :alt="product.name"
+                width="150px"
+              />
+              <h2>{{ product.name }}</h2>
+              <p>Harga: Rp{{ product.price }}</p>
+              <p>Stok: {{ product.stock }}</p>
+              <p class="rating">
+                <span class="star-rating" v-html="getStarRating(product.rating)"></span> ({{ product.rating }})
+              </p>
+              <button @click="showDetail(product.id)" class="detailButton">
+                Detail Produk
+              </button>
+              <button @click="addToCart(product)" class="keranjangButton">
+                Tambah ke Keranjang
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="container">
+          <p>&copy; MuyEstiloso™</p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          searchQuery: "",
+          products: [
+            { id: 1, name: "Hoodie CAD", price: 396000, image: "Hoodie.png", rating: 4.5, stock: 1000 },
+            { id: 2, name: "Harrington Jacket", price: 600000, image: "JacketHarrington.png", rating: 4.7, stock: 800 },
+            { id: 3, name: "Denim Jacket", price: 900000, image: "DenimJacket.png", rating: 4.8, stock: 900 },
+            { id: 4, name: "Denim Selvedge", price: 599000, image: "DenimSelvedge.png", rating: 4.6, stock: 1100 },
+            { id: 5, name: "Retrograde Shoes High", price: 538000, image: "RetrogradeHi.png", rating: 4.9, stock: 750 },
+            { id: 6, name: "Retrograde Shoes Low", price: 538000, image: "RetrogradeLow.png", rating: 4.4, stock: 850 },
+          ],
+        },
+        computed: {
+          filteredProducts() {
+            return this.products.filter((product) =>
+              product.name
+                .toLowerCase()
+                .includes(this.searchQuery.toLowerCase())
+            );
+          },
+        },
+        methods: {
+          getStarRating(rating) {
+            const fullStar = "&#9733;";
+            const emptyStar = "&#9734;";
+            const stars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5 ? "&#9733;" : "";
+            return fullStar.repeat(stars) + halfStar + emptyStar.repeat(5 - stars - (halfStar ? 1 : 0));
+          },
+          showDetail(productId) {
+            window.location.href = `detail_produk.html?id=${productId}`;
+          },
+          addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push(product);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Item ditambahkan ke keranjang",
+            });
+          },
+          searchProducts() {},
+        },
+      });
+    </script>
+  </body>
+</html>
